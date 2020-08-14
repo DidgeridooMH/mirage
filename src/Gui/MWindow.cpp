@@ -6,10 +6,10 @@
 #endif
 
 MWindow::MWindow(MWindow* parent) : m_parent(parent) {
-  m_hwnd = CreateWindowEx(0, L"Mirage Default Window", L"Window",
-                          WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
-                          CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL,
-                          MApp::GetWinInstance(), NULL);
+  m_hwnd =
+      CreateWindowEx(0, MApp::GetWinClassName(), L"Window", WS_OVERLAPPEDWINDOW,
+                     CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+                     NULL, NULL, MApp::GetWinInstance(), NULL);
   if (m_hwnd == NULL) {
     throw std::runtime_error("Unable to create window");
   }
