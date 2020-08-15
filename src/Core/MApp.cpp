@@ -1,5 +1,5 @@
 #include <Core/MApp.hpp>
-#include <Gui/Windows/MWinWindows.hpp>
+#include <Gui/Windows/MWinWindow.hpp>
 
 std::mutex MApp::m_instanceMutex;
 MApp* MApp::p_instance;

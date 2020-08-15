@@ -10,6 +10,12 @@
 
 class MWinWindow : public MWindowBase {
  public:
+  MWinWindow(MWinWindow* parent = nullptr);
+  ~MWinWindow() override;
+
+  void Show() override;
+  bool HandleWindowMessage() override;
+
   static LRESULT CALLBACK ProcessMessage(HWND hwnd, UINT uMsg, WPARAM wParam,
                                          LPARAM lParam);
 

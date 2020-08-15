@@ -8,7 +8,7 @@ int wmain(int argc, wchar_t** argv, wchar_t** env) {
   auto window = std::make_shared<MWindow>();
   window->Show();
 
-  while (MWindow::HandleMessage())
+  while (window->HandleWindowMessage())
     ;
 
   return 0;

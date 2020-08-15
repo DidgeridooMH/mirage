@@ -2,7 +2,8 @@
 #include <stdexcept>
 
 #ifdef _WIN64
-MWinWindow::MWinWindow(MWindowBase* parent) : m_parent(parent) {
+MWinWindow::MWinWindow(MWinWindow* parent) {
+  m_parent = parent;
   m_hwnd = CreateWindowEx(0, MApp::GetWinClassName(), L"Mirage App",
                           WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
                           CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL,
@@ -11,6 +12,8 @@ MWinWindow::MWinWindow(MWindowBase* parent) : m_parent(parent) {
     throw std::runtime_error("Unable to create window");
   }
 }
+
+MWinWindow::~MWinWindow() {}
 
 void MWinWindow::Show() { ShowWindow(m_hwnd, 1); }
 

@@ -6,13 +6,17 @@
 
 class MWindowBase {
  public:
-  MWindowBase(MWindowBase* parent = nullptr);
+  virtual ~MWindowBase() = default;
 
   virtual void Show() = 0;
   virtual bool HandleWindowMessage() = 0;
 
- private:
+ protected:
   MWindowBase* m_parent;
 };
+
+#ifdef _WIN64
+#include <Gui/Windows/MWinWindow.hpp>
+#endif
 
 #endif
