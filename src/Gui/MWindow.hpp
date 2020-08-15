@@ -4,21 +4,15 @@
 #include <Core/MApp.hpp>
 #include <thread>
 
-class MWindow {
+class MWindowBase {
  public:
-  MWindow(MWindow* parent = nullptr);
+  MWindowBase(MWindowBase* parent = nullptr);
 
-  void Show();
-
-  static LRESULT CALLBACK ProcessMessage(HWND hwnd, UINT uMsg, WPARAM wParam,
-                                         LPARAM lParam);
-
-  static bool HandleMessage();
+  virtual void Show() = 0;
+  virtual bool HandleWindowMessage() = 0;
 
  private:
-  MWindow* m_parent;
-  HWND m_hwnd;
-  std::thread m_messageThread;
+  MWindowBase* m_parent;
 };
 
 #endif

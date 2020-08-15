@@ -1,5 +1,5 @@
 #include <Core/MApp.hpp>
-#include <Gui/MWindow.hpp>
+#include <Gui/Windows/MWinWindows.hpp>
 
 std::mutex MApp::m_instanceMutex;
 MApp* MApp::p_instance;
@@ -8,7 +8,7 @@ MApp* MApp::p_instance;
 MApp::MApp() {
   WNDCLASS wc = {};
 
-  wc.lpfnWndProc = &MWindow::ProcessMessage;
+  wc.lpfnWndProc = &MWinWindow::ProcessMessage;
   wc.hInstance = GetWinInstance();
   wc.lpszClassName = GetWinClassName();
 
