@@ -21,24 +21,19 @@ class MApp {
   MApp(MApp& other) = delete;
   void operator=(const MApp&) = delete;
 
+  static MApp* GetInstance();
+
 #ifdef _WIN64
-  static MApp* GetInstance(HINSTANCE hInstance = nullptr);
   static HINSTANCE GetWinInstance();
   static const wchar_t* GetWinClassName();
 #endif
 
  protected:
-#ifdef _WIN64
-  MApp(HINSTANCE hInstance);
-#endif
+  MApp();
 
  private:
   static std::mutex m_instanceMutex;
   static MApp* p_instance;
-
-#ifdef _WIN64
-  static HINSTANCE m_hInstance;
-#endif
 };
 
 #endif

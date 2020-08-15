@@ -1,7 +1,7 @@
 #ifndef _MIRAGE_MWINDOW_HPP_
 #define _MIRAGE_MWINDOW_HPP_
 
-#include <MApp.hpp>
+#include <Core/MApp.hpp>
 #include <thread>
 
 class MWindow {

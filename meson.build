@@ -1,6 +1,6 @@
 project('mirage', 'cpp')
 
-lib_src = ['src/MApp.cpp', 'src/Gui/MWindow.cpp']
+lib_src = ['src/Core/MApp.cpp', 'src/Gui/MWindow.cpp', 'src/Core/Mirage.hpp']
 
 lib_inc = include_directories('src/')
 

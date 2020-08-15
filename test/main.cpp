@@ -1,8 +1,9 @@
+#include <Core/Mirage.hpp>
 #include <Gui/MWindow.hpp>
 #include <memory>
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int) {
-  MApp::GetInstance(hInstance);
+int wmain(int argc, wchar_t** argv, wchar_t** env) {
+  MApp::GetInstance();
 
   auto window = std::make_shared<MWindow>();
   window->Show();
