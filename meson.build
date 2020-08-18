@@ -1,8 +1,11 @@
 project('mirage', 'cpp')
 
 lib_src = ['src/Core/MApp.cpp',
-           'src/Gui/Windows/MWinWindow.cpp',
-           'src/Core/Mirage.hpp']
+           'src/Events/MClickEventHandler.cpp',
+           'src/Events/MEventHandler.cpp',
+           'src/Gui/MDrawable.cpp',
+           'src/Gui/MText.cpp',
+           'src/Gui/Windows/MWinWindow.cpp']
 
 lib_inc = include_directories('src/')
 

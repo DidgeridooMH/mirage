@@ -4,22 +4,24 @@
 #include <Gui/MWindow.hpp>
 
 #ifdef _WIN64
-#include <windows.h>
 
 #define MWindow MWinWindow
 
 class MWinWindow : public MWindowBase {
  public:
-  MWinWindow(MWinWindow* parent = nullptr);
+  MWinWindow(std::shared_ptr<MWinWindow> parent = nullptr);
   ~MWinWindow() override;
 
   void Show() override;
-  bool HandleWindowMessage() override;
 
-  static LRESULT CALLBACK ProcessMessage(HWND hwnd, UINT uMsg, WPARAM wParam,
-                                         LPARAM lParam);
+  void Draw(int offsetX, int offsetY) override;
+
+  HWND GetHandle() override;
 
  private:
+  LRESULT ProcessMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+  std::shared_ptr<MWinWindow> m_parent;
   HWND m_hwnd;
 };
 #endif

@@ -1,6 +1,6 @@
 #include <Core/MApp.hpp>
-#include <Gui/Windows/MWinWindow.hpp>
 
+CallbackMap MApp::m_updateCallbacks;
 std::mutex MApp::m_instanceMutex;
 MApp* MApp::p_instance;
 
@@ -8,7 +8,9 @@ MApp* MApp::p_instance;
 MApp::MApp() {
   WNDCLASS wc = {};
 
-  wc.lpfnWndProc = &MWinWindow::ProcessMessage;
+  wc.style = CS_HREDRAW | CS_VREDRAW;
+  wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+  wc.lpfnWndProc = &MApp::ProcessMessage;
   wc.hInstance = GetWinInstance();
   wc.lpszClassName = GetWinClassName();
 
@@ -25,7 +27,38 @@ MApp* MApp::GetInstance() {
   return p_instance;
 }
 
+int MApp::Execute() {
+#ifdef _WIN64
+  MSG msg = {};
+  while (GetMessage(&msg, NULL, 0, 0)) {
+    TranslateMessage(&msg);
+    DispatchMessage(&msg);
+  }
+  return msg.lParam;
+#endif
+}
+
 HINSTANCE MApp::GetWinInstance() { return GetModuleHandle(NULL); }
 
 const wchar_t* MApp::GetWinClassName() { return L"Mirage Default Window"; }
+
+void MApp::RegisterComponent(void* component, UpdateCallback callback) {
+  m_updateCallbacks.insert(std::make_pair(component, callback));
+}
+
+void MApp::DeregisterComponent(void* component) {
+  m_updateCallbacks.erase(component);
+}
+
+LRESULT CALLBACK MApp::ProcessMessage(HWND hwnd, UINT uMsg, WPARAM wParam,
+                                      LPARAM lParam) {
+  auto _this =
+      reinterpret_cast<MDrawable*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+
+  if (m_updateCallbacks.count(_this) > 0) {
+    return m_updateCallbacks[_this](_this, hwnd, uMsg, wParam, lParam);
+  }
+
+  return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
 #endif

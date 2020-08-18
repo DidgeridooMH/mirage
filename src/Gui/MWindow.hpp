@@ -1,18 +1,14 @@
 #ifndef _MIRAGE_MWINDOW_HPP_
 #define _MIRAGE_MWINDOW_HPP_
 
-#include <Core/MApp.hpp>
+#include <Gui/MDrawable.hpp>
 #include <thread>
 
-class MWindowBase {
+class MWindowBase : public MDrawable {
  public:
   virtual ~MWindowBase() = default;
 
   virtual void Show() = 0;
-  virtual bool HandleWindowMessage() = 0;
-
- protected:
-  MWindowBase* m_parent;
 };
 
 #ifdef _WIN64

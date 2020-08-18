@@ -1,20 +1,17 @@
-#ifndef MIRAGE_HPP
-#define MIRAGE_HPP
+#ifndef _MIRAGE_MAPP_HPP_
+#define _MIRAGE_MAPP_HPP_
+
+#include <Platforms/Platform.hpp>
+#include <map>
+#include <mutex>
+
+class MDrawable;
 
 #ifdef _WIN64
-
-#ifndef UNICODE
-#define UNICODE
+typedef LRESULT (*UpdateCallback)(MDrawable*, HWND, UINT, WPARAM, LPARAM);
 #endif
 
-#ifndef _UNICODE
-#define _UNICODE
-#endif
-
-#include <windows.h>
-#endif
-
-#include <mutex>
+typedef std::map<void*, UpdateCallback> CallbackMap;
 
 class MApp {
  public:
@@ -23,10 +20,17 @@ class MApp {
 
   static MApp* GetInstance();
 
+  static int Execute();
+
 #ifdef _WIN64
   static HINSTANCE GetWinInstance();
   static const wchar_t* GetWinClassName();
+  static LRESULT CALLBACK ProcessMessage(HWND hwnd, UINT uMsg, WPARAM wParam,
+                                         LPARAM lParam);
 #endif
+
+  static void RegisterComponent(void* component, UpdateCallback callback);
+  static void DeregisterComponent(void* component);
 
  protected:
   MApp();
@@ -34,6 +38,7 @@ class MApp {
  private:
   static std::mutex m_instanceMutex;
   static MApp* p_instance;
+  static CallbackMap m_updateCallbacks;
 };
 
 #endif
